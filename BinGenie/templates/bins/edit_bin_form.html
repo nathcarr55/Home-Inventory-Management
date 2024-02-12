@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
     <h2>Edit Bin</h2>
-    <form action="{{ url_for('bins_bp.edit_bin', id=bin_id) }}" method="post">
+    <form action="{{ url_for('bins_bp.edit_bin', id=bin.id) }}" method="post">
         {{ form.hidden_tag() }}
         <div>
             {{ form.name.label }}

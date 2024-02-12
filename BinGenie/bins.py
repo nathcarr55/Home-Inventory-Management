@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template,flash,redirect,url_for
+from flask import Blueprint, render_template,flash,redirect,url_for,request
 from .database import Bin, db, Item, Location
 from .forms import BinForm, EditBinForm
 
@@ -34,8 +34,8 @@ def new_bin():
 
 @bins_bp.route('/bins/edit/<uuid:id>', methods=['GET', 'POST'])
 def edit_bin(id):
-    bin = Bin.query.get_or_404(str(id))
-    form = EditBinForm(obj=bin)
+    bin = Bin.query.get_or_404(id)
+    form = EditBinForm(obj=bin) if request.method == 'GET' else EditBinForm()
     if form.validate_on_submit():
         bin.name = form.name.data
         bin.capacity = form.capacity.data
