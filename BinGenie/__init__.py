@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from .config import DevelopmentConfig
+from .config import DevelopmentConfig, ProductionConfig
 from flask_migrate import Migrate
 from .database import db
 #db = SQLAlchemy()
