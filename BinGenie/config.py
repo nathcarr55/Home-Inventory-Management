@@ -8,6 +8,7 @@ class Config(object):
 
 class ProductionConfig(Config):
     DEBUG = False
+    SQLALCHEMY_DATABASE_URI = f'postgresql://{os.environ.get("DATABASE_USER")}:{os.environ.get("DATABASE_PASSWORD")}@localhost/bin_genie_database'
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
