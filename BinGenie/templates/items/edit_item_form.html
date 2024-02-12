@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Item{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Edit Item</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="name">Name</label>
+            {{ form.name(class="form-control", id="name", required=true, value=item.name) }}
+            {% if form.name.errors %}
+                <div class="alert alert-danger">{{ form.name.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            {{ form.quantity(class="form-control", id="quantity", required=true, value=item.quantity) }}
+            {% if form.quantity.errors %}
+                <div class="alert alert-danger">{{ form.quantity.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            {{ form.description(class="form-control", id="description", value=item.description) }}
+        </div>
+        <div class="form-group">
+            <label for="bin_id">Bin</label>
+            {{ form.bin_id(class="form-control", id="bin_id", required=true) }}
+            {% if form.bin_id.errors %}
+                <div class="alert alert-danger">{{ form.bin_id.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="image">Current Image</label>
+            {% if item.image_path %}
+                <img src="{{ url_for('static', filename='uploads/' + item.image_path) }}" alt="Item Image" style="max-width: 100px; max-height: 100px;">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+            <label for="image">Upload New Image</label>
+            {{ form.image(class="form-control-file", id="image") }}
+            {% if form.image.errors %}
+                <div class="alert alert-danger">{{ form.image.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+{% endblock %}

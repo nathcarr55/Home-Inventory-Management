@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Item{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Add New Item</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="name">Name</label>
+            {{ form.name(class="form-control", id="name", required=true) }}
+            {% if form.name.errors %}
+                <div class="alert alert-danger">{{ form.name.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            {{ form.quantity(class="form-control", id="quantity", required=true) }}
+            {% if form.quantity.errors %}
+                <div class="alert alert-danger">{{ form.quantity.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            {{ form.description(class="form-control", id="description") }}
+        </div>
+        <div class="form-group">
+            <label for="bin_id">Bin</label>
+            {{ form.bin_id(class="form-control", id="bin_id", required=true) }}
+            {% if form.bin_id.errors %}
+                <div class="alert alert-danger">{{ form.bin_id.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            {{ form.image(class="form-control-file", id="image") }}
+            {% if form.image.errors %}
+                <div class="alert alert-danger">{{ form.image.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

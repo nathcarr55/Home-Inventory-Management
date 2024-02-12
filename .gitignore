@@ -1,0 +1,13 @@
+
+.idea/Home-Inventory-Management.iml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+migrations/__pycache__/env.cpython-311.pyc
+*.ini
+migrations/README
+migrations/script.py.mako
+migrations/versions/__pycache__/aa8d31d84301_added_quantity_to_item.cpython-311.pyc
+migrations/versions/aa8d31d84301_added_quantity_to_item.py
+migrations/env.py

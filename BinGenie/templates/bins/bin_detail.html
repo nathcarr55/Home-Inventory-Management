@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Bin Details</h2>
+    <p><strong>Name:</strong> {{ bin.name }}</p>
+    <p><strong>Capacity:</strong> {{ bin.capacity }}</p>
+    <p><strong>Location Name:</strong> {{ location.name }}</p>
+
+    <h3>Items in Bin</h3>
+    <ul>
+        {% for item in items %}
+        <li>{{ item.name }} - {{ item.description }}</li>
+        {% else %}
+        <li>No items found in this bin.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('bins_bp.list_bins') }}">Back to Bins List</a>
+</div>
+{% endblock %}

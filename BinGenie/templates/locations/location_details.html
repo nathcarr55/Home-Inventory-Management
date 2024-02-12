@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Location Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Location Details</h2>
+    <div class="location-details">
+        <p><strong>ID:</strong> {{ location.id }}</p>
+        <p><strong>Name:</strong> {{ location.name }}</p>
+        <p><strong>Description:</strong> {{ location.description }}</p>
+
+        <h3>Bins in Location</h3>
+            <ul>
+                {% for bin in bins %}
+                <li>
+                    {{ bin.name }} <a href="{{ url_for('bins_bp.get_bin', id=bin.id) }}">View Details</a>
+                </li>
+                {% else %}
+                <li>No bins found in this Location.</li>
+                {% endfor %}
+            </ul>
+    </div>
+    <a href="{{ url_for('locations_bp.list_locations') }}" class="btn btn-primary">Back to Locations List</a>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Home - BinGenie{% endblock %}
+
+{% block content %}
+<div class="home">
+    <h1>Welcome to BinGenie!</h1>
+    <p>Your home inventory management system.</p>
+    <div>
+        <a href="{{ url_for('locations_bp.list_locations') }}" class="btn btn-primary">Locations</a>
+    </div>
+
+    <div>
+        <a href="{{ url_for('bins_bp.list_bins') }}">Bins</a>
+    </div>
+    <div>
+        <a href="{{ url_for('items_bp.list_items') }}">Items</a>
+    </div>
+
+</div>
+{% endblock %}

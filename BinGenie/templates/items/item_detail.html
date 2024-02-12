@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Item Detail{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ item.name }}</h1>
+    <!-- Display item details -->
+    <p>Quantity: {{ item.quantity }}</p>
+    <p>Description: {{ item.description }}</p>
+    <!-- Display the image, if an image URL is provided -->
+    {% if image_url %}
+        <img src="{{ image_url }}" alt="Item Image" style="max-width: 500px;">
+    {% endif %}
+</div>
+{% endblock %}
