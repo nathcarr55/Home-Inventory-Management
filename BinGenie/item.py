@@ -23,34 +23,26 @@ def get_item(id):
 def new_item():
     form = ItemForm()
     if form.validate_on_submit():
-        # Save the uploaded file
+        new_item = Item(
+            name=form.name.data,
+            quantity=form.quantity.data,
+            description=form.description.data,
+            bin_id=form.bin_id.data
+        )
+        db.session.add(new_item)
+        db.session.flush()  # This will generate the ID but not commit the transaction
+        item_id = new_item.id
+
         file = form.image.data
         if file:
-            filename = secure_filename(file.filename)
+            _, file_extension = os.path.splitext(file.filename)
+            filename = secure_filename(f"{item_id}{file_extension}")
             file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
+            new_item.image_path = file_path
 
-            new_item = Item(
-                name=form.name.data,
-                quantity=form.quantity.data,
-                description=form.description.data,
-                bin_id=form.bin_id.data,
-                image_path=file_path  # Save the path where the file is saved
-            )
-            db.session.add(new_item)
-            db.session.commit()
-            flash('Item created successfully!', 'success')
-        else:
-            new_item = Item(
-                name=form.name.data,
-                quantity=form.quantity.data,
-                description=form.description.data,
-                bin_id=form.bin_id.data,
-                image_path=None  # Save the path where the file is saved
-            )
-            db.session.add(new_item)
-            db.session.commit()
-            flash('Item created successfully!', 'success')
+        db.session.commit()
+        flash('Item created successfully!', 'success')
         return redirect(url_for('items_bp.list_items'))
     return render_template('items/new_item_form.html', form=form)
 
