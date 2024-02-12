@@ -38,6 +38,7 @@ def new_item():
             _, file_extension = os.path.splitext(file.filename)
             filename = secure_filename(f"{item_id}{file_extension}")
             file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            print(file_path)
             file.save(file_path)
             new_item.image_path = file_path
 
