@@ -9,7 +9,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Actions</th>
             </tr>
@@ -17,7 +16,6 @@
         <tbody>
             {% for location in locations %}
             <tr>
-                <td>{{ location.id }}</td>
                 <td>{{ location.name }}</td>
                 <td>
                     <a href="{{ url_for('locations_bp.get_location', id=location.id) }}" class="btn btn-info">View</a>

@@ -10,6 +10,11 @@ class LocationForm(FlaskForm):
     description = TextAreaField('Description')
     submit = SubmitField('Create Location')
 
+class EditLocationForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired(), Length(max=255)])
+    description = TextAreaField('Description', validators=[Length(max=255)])
+    submit = SubmitField('Update Location')
+
 class BinForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     capacity = StringField('Capacity')

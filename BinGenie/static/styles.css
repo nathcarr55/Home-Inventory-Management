@@ -1,0 +1,134 @@
+/* Style for the whole page or container for coherence */
+body, .container {
+    font-family: 'Segoe UI', 'Roboto', sans-serif; /* Modern, clean font */
+    background-color: #f4f4f9; /* Light grey background for a clean look */
+    color: #333; /* Soft black for text */
+    line-height: 1.6;
+}
+
+/* Modern table styles */
+table {
+  width: 100%; /* Full-width to use space effectively */
+  border-collapse: collapse; /* Collapses borders between table cells */
+  margin-bottom: 20px; /* Space below the table */
+}
+
+th, td {
+  text-align: left; /* Align text to the left for clean look */
+  padding: 12px 15px; /* Spacious padding inside cells */
+  border-bottom: 1px solid #ddd; /* Light border for each row */
+}
+
+/* Zebra striping for rows */
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light zebra striping for even rows */
+}
+
+/* Button styles for actions */
+.btn {
+  padding: 8px 16px; /* Ample padding for clickability */
+  border: none; /* No border for flat design */
+  border-radius: 4px; /* Slightly rounded corners for a modern touch */
+  cursor: pointer; /* Cursor pointer to indicate clickability */
+  transition: background-color 0.3s; /* Smooth transition for interactions */
+}
+
+/* Specific button colors for actions */
+.btn-info {
+  background-color: #17a2b8; /* Bootstrap's info color for 'View' */
+}
+
+.btn-warning {
+  background-color: #ffc107; /* Bootstrap's warning color for 'Edit' */
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Bootstrap's danger color for 'Delete' */
+}
+
+/* Hover states for buttons */
+.btn:hover {
+  opacity: 0.8; /* Slight transparency on hover for interaction */
+}
+
+/* Make sure your forms are inline with your buttons */
+form.d-inline {
+  display: inline-block; /* Aligns form with inline buttons */
+}
+
+/* Additional styling for a modern look */
+/* You can use box-shadows for a subtle 3D effect, transitions for interaction feedback, and a consistent, neutral color scheme with one or two accent colors. */
+
+/* New styles for a cleaner look */
+.btn {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Improve the visual feedback on button interaction */
+.btn:active {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow for pressed effect */
+    transform: translateY(1px); /* Mimic button being pressed */
+}
+
+/* Style enhancements for form inputs for a more engaging user experience */
+input[type="text"], input[type="email"], input[type="password"], select {
+    width: 100%; /* Full width to maximize usability */
+    padding: 10px; /* Comfortable padding */
+    margin: 8px 0; /* Space out elements */
+    display: inline-block; /* Ensure proper spacing */
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px; /* Match button corner radius for consistency */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Focus state for inputs to highlight active element */
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, select:focus {
+    border-color: #4A90E2; /* Highlight with a noticeable border color */
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5); /* Glow effect for focus */
+}
+
+/* Styling headers for a coherent visual hierarchy */
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* Consistent text color */
+    margin-top: 0; /* Remove top margin for cleaner spacing */
+    font-weight: normal; /* Avoid overly bold headers for a modern look */
+}
+
+/* Additional utility classes for margins and padding */
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.pt-20 {
+    padding-top: 20px;
+}
+
+.pb-20 {
+    padding-bottom: 20px;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .btn {
+        margin: 5px 0; /* Adjust spacing for smaller screens */
+    }
+
+    table {
+        display: block;
+        overflow-x: auto; /* Allow table scrolling on small devices */
+    }
+}
+
+/* Footer styling for a complete look */
+footer {
+    background-color: #333; /* Dark footer for contrast */
+    color: white; /* Light text for readability */
+    text-align: center;
+    padding: 20px 10px; /* Adequate padding */
+    margin-top: 20px; /* Space from content */
+}
