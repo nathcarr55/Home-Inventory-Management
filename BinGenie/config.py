@@ -5,7 +5,7 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'super-secure-key'
     DEBUG = False
     TESTING = False
-    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER','default_upload_path')  
+    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER')
 
 
 class ProductionConfig(Config):
