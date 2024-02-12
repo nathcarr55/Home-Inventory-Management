@@ -8,14 +8,37 @@
     <p><strong>Location Name:</strong> {{ location.name }}</p>
 
     <h3>Items in Bin</h3>
-    <ul>
-        {% for item in items %}
-        <li>{{ item.name }} - {{ item.description }}</li>
-        {% else %}
-        <li>No items found in this bin.</li>
-        {% endfor %}
-    </ul>
+    {% if items %}
+    <table>
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>
+                    <a href="{{ url_for('items_bp.get_item', id=item.id) }}" class="btn btn-info">View</a>
+                    <a href="{{ url_for('items_bp.edit_item', id=item.id) }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ url_for('items_bp.delete_item', id=item.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">No items found in this bin.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No items found in this bin.</p>
+    {% endif %}
 
-    <a href="{{ url_for('bins_bp.list_bins') }}">Back to Bins List</a>
+    <a href="{{ url_for('bins_bp.list_bins') }}" class="btn">Back to Bins List</a>
 </div>
 {% endblock %}
