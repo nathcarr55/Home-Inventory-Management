@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, url_for, flash, redirect, current_app
+from flask import Blueprint, render_template, url_for, flash, redirect, current_app,send_file, abort, send_from_directory
 from .database import Item, Location,Bin, db
 from .forms import ItemForm, EditItemForm
 import os
+
 from werkzeug.utils import secure_filename
 # Create a Blueprint for items
 items_bp = Blueprint('items_bp', __name__, template_folder='templates/items')
@@ -95,3 +96,19 @@ def delete_item(id):
             flash('Failed to delete the associated image.', 'error')
 
     return redirect(url_for('items_bp.list_items'))
+
+
+@items_bp.route('/item-image/<uuid:item_id>')
+def serve_item_image(item_id):
+    directory = os.environ.get("UPLOAD_FOLDER")
+    item = Item.query.get_or_404(item_id)
+    image_path = item.image_path
+    # If no image path, abort with a 404 response
+    if not image_path:
+        image_path = os.path.join(directory,"default.jpeg")
+    file_path = os.path.join(image_path)
+    # Extract the filename from the image path
+    filename = os.path.basename(image_path)
+    if not os.path.isfile(file_path):
+        abort(404)
+    return send_from_directory(directory, filename)
