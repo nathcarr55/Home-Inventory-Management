@@ -132,3 +132,6 @@ footer {
     padding: 20px 10px; /* Adequate padding */
     margin-top: 20px; /* Space from content */
 }
+.btn-spacing {
+    margin-bottom: 40px;
+}

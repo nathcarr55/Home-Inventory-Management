@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Item to {{ bin.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Add New Item to "{{ bin.name }}" Bin</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.bin_id(type="hidden") }}
+
+        <div class="form-group">
+            <label for="name">Name</label>
+            {{ form.name(class="form-control", id="name", required=True) }}
+            {% if form.name.errors %}
+                <div class="alert alert-danger">{{ form.name.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            {{ form.quantity(class="form-control", id="quantity", required=True) }}
+            {% if form.quantity.errors %}
+                <div class="alert alert-danger">{{ form.quantity.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            {{ form.description(class="form-control", id="description") }}
+            {% if form.description.errors %}
+                <div class="alert alert-danger">{{ form.description.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="image">Image</label>
+            {{ form.image(class="form-control-file", id="image") }}
+            {% if form.image.errors %}
+                <div class="alert alert-danger">{{ form.image.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <a href="{{ url_for('bins_bp.get_bin', id=bin.id) }}" class="btn btn-secondary mt-3">Back to Bin Details</a>
+</div>
+{% endblock %}
