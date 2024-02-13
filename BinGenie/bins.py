@@ -69,6 +69,7 @@ def create_item_in_bin(bin_id):
             bin_id=bin_id,
             # Assume handling of image field remains the same
         )
+        db.session.add(new_item)
         db.session.flush()  # This will generate the ID but not commit the transaction
         item_id = new_item.id
 
