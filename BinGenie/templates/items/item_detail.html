@@ -10,12 +10,9 @@
     <p>Description: {{ item.description }}</p>
     <!-- Display the image, if an image URL is provided -->
     <td>
-        {% if item.image_path %}
             <!-- Call the new route with item's UUID -->
-            <img src="{{ url_for('items_bp.serve_item_image', item_id=item.id) }}" alt="{{ item.name }}" height="100">
-        {% else %}
-            No image available.
-        {% endif %}
+        <img src="{{ url_for('items_bp.serve_item_image', item_id=item.id) }}" alt="{{ item.name }}" height="200">
+
     </td>
 </div>
 {% endblock %}
