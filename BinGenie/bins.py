@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template,flash,redirect,url_for,request, current_app
 from .database import Bin, db, Item, Location
 from .forms import BinForm, EditBinForm, BinItemForm
+from werkzeug.utils import secure_filename
 import os
 
 # Create a Blueprint for bins
@@ -68,7 +69,18 @@ def create_item_in_bin(bin_id):
             bin_id=bin_id,
             # Assume handling of image field remains the same
         )
-        db.session.add(new_item)
+        db.session.flush()  # This will generate the ID but not commit the transaction
+        item_id = new_item.id
+
+        file = form.image.data
+        if file:
+            file_extension = os.path.splitext(file.filename)
+            filename = secure_filename(f"{item_id}{file_extension}")
+            file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            print(file_path)
+            file.save(file_path)
+            new_item.image_path = file_path
+
         db.session.commit()
         flash('Item created successfully!', 'success')
         return redirect(url_for('bins_bp.get_bin', id=bin_id))
