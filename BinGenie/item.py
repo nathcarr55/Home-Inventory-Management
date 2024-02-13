@@ -1,9 +1,8 @@
-from flask import Blueprint, render_template, url_for, flash, redirect
+from flask import Blueprint, render_template, url_for, flash, redirect, current_app
 from .database import Item, Location,Bin, db
 from .forms import ItemForm, EditItemForm
 import os
 from werkzeug.utils import secure_filename
-from flask import current_app
 # Create a Blueprint for items
 items_bp = Blueprint('items_bp', __name__, template_folder='templates/items')
 
