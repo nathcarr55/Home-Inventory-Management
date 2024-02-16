@@ -5,22 +5,42 @@
 {% block content %}
 <div class="container">
     <h2>Location Details</h2>
-    <div class="location-details">
+    <div class="location-details mb-4">
         <p><strong>ID:</strong> {{ location.id }}</p>
         <p><strong>Name:</strong> {{ location.name }}</p>
         <p><strong>Description:</strong> {{ location.description }}</p>
-
-        <h3>Bins in Location</h3>
-            <ul>
-                {% for bin in bins %}
-                <li>
-                    {{ bin.name }} <a href="{{ url_for('bins_bp.get_bin', id=bin.id) }}">View Details</a>
-                </li>
-                {% else %}
-                <li>No bins found in this Location.</li>
-                {% endfor %}
-            </ul>
     </div>
-    <a href="{{ url_for('locations_bp.list_locations') }}" class="btn btn-primary">Back to Locations List</a>
+
+    <h3>Bins in Location</h3>
+    {% if bins %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Bin Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bin in bins %}
+                <tr>
+                    <td>{{ bin.name }}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ url_for('bins_bp.get_bin', id=bin.id) }}" class="btn btn-info mr-2">View</a>
+                            <a href="{{ url_for('bins_bp.edit_bin', id=bin.id) }}" class="btn btn-warning mr-2">Edit</a>
+                            <form action="{{ url_for('bins_bp.delete_bin', id=bin.id) }}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure?');">
+                                <input type="submit" value="Delete" class="btn btn-danger"/>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div>No bins found in this Location.</div>
+    {% endif %}
+
+    <a href="{{ url_for('locations_bp.list_locations') }}" class="btn btn-primary mt-3">Back to Locations List</a>
 </div>
 {% endblock %}

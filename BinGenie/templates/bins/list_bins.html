@@ -1,18 +1,36 @@
-<!-- templates/bins/list_bins.html -->
 {% extends "base.html" %}
 
 {% block content %}
 <div class="container">
     <h2>Bins</h2>
-    <a href="{{ url_for('bins_bp.new_bin') }}">Add New Bin</a>
-    <ul>
-    {% for bin in bins %}
-        <li>{{ bin.name }} - <a href="{{ url_for('bins_bp.get_bin', id=bin.id) }}" class="btn">View</a> | <a href="{{ url_for('bins_bp.edit_bin', id=bin.id) }}" class="btn">Edit</a>
-            <form action="{{ url_for('bins_bp.delete_bin', id=bin.id) }}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure?');">
-                <input type="submit" value="Delete" />
-            </form>
-        </li>
-    {% endfor %}
-    </ul>
+    <a href="{{ url_for('bins_bp.new_bin') }}" class="btn btn-primary mb-3">Add New Bin</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Bin Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bin in bins %}
+            <tr>
+                <td>{{ bin.name }}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <a href="{{ url_for('bins_bp.get_bin', id=bin.id) }}" class="btn btn-info mr-2">View</a>
+                        <a href="{{ url_for('bins_bp.edit_bin', id=bin.id) }}" class="btn btn-warning mr-2">Edit</a>
+                        <form action="{{ url_for('bins_bp.delete_bin', id=bin.id) }}" method="post" class="d-inline" onsubmit="return confirm('Are you sure?');">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="2">No bins found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
