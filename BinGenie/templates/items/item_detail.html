@@ -3,11 +3,12 @@
 {% block title %}Item Detail{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container" xmlns="http://www.w3.org/1999/html">
     <h1>{{ item.name }}</h1>
     <!-- Display item details -->
     <p>Quantity: {{ item.quantity }}</p>
     <p>Description: {{ item.description }}</p>
+
     <!-- Display the image, if an image URL is provided -->
     <td>
             <!-- Call the new route with item's UUID -->
@@ -15,4 +16,5 @@
 
     </td>
 </div>
+<a href="{{ url_for('bins_bp.get_bin',id=item.bin_id) }}" class="btn"> Back to Bin </a>
 {% endblock %}
