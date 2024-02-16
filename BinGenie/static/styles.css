@@ -135,3 +135,12 @@ footer {
 .btn-spacing {
     margin-bottom: 40px;
 }
+
+li {
+    margin-bottom: 10px; /* Adjusts the space between list items */
+}
+
+.btn, input[type="submit"] {
+    margin-right: 5px; /* Adds space to the right of each button */
+    /* Additional styles here for padding, display, etc., if needed */
+}
