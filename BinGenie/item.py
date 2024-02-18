@@ -120,7 +120,7 @@ def search():
         return make_response("No Search Query provided", 400)
 
     search = f"%{query}%"
-    items = Item.query.filter(Item.name.like(search)).all()
+    items = Item.query.filter(Item.name.ilike(search)).all()
     results = []
     for item in items:
         bin_obj = Bin.query.get(item.bin_id)
