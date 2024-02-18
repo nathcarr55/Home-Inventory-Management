@@ -16,19 +16,75 @@
             <a href="{{ url_for('home_bp.home') }}">Home</a>
             <!-- Add more navigation links here -->
         </nav>
+
         {% endblock %}
     </header>
 
     <main>
-        {% block content %}{% endblock %}
+        <div id="search-box">
+            <input type="text" id="search-input" placeholder="Search items...">
+            <button onclick="performSearch()">Search</button>
+        </div>
+        <div id="search-results"></div>
+        {% block content %}
+        {% endblock %}
     </main>
+
+    {% block scripts %}
+    <script>
+    function performSearch() {
+        var query = document.getElementById('search-input').value;
+        if (query) {
+            fetch('/search?q=' + encodeURIComponent(query))
+                .then(response => response.json())
+                .then(data => {
+                    displayResults(data);
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            alert("Please enter a search term.");
+        }
+    }
+
+    function displayResults(data) {
+        const resultsDiv = document.getElementById('search-results');
+        resultsDiv.innerHTML = ''; // Clear previous results
+
+        if (data.length === 0) {
+            resultsDiv.innerHTML = 'No results found.';
+            return;
+        }
+
+        // Create a list to display the results
+        const resultList = document.createElement('ul');
+        data.forEach(item => {
+            // Create a list item for each result
+            const itemElement = document.createElement('li');
+
+            // Set the inner HTML with links to the item, bin, and location details
+            itemElement.innerHTML = `
+                <a href="/items/${item.item_id}">${item.item_name}</a> -
+                Located in: <a href="/bins/${item.bin_id}">${item.bin_name}</a>,
+                <a href="/locations/${item.location_id}">${item.location_name}</a>
+            `;
+
+            // Append the list item to the list
+            resultList.appendChild(itemElement);
+        });
+
+        // Append the list to the results div
+        resultsDiv.appendChild(resultList);
+    }
+    </script>
+    {% endblock %}
 
     <footer>
         {% block footer %}
         <p>© 2024 BinGenie</p>
         {% endblock %}
     </footer>
-
-    {% block scripts %}{% endblock %}
 </body>
 </html>
+
+
+

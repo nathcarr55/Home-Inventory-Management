@@ -144,3 +144,45 @@ li {
     margin-right: 5px; /* Adds space to the right of each button */
     /* Additional styles here for padding, display, etc., if needed */
 }
+#search-box {
+    margin: 10px;
+    text-align: center;
+}
+
+#search-input {
+    width: 60%;
+    padding: 10px;
+    margin-right: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#search-box button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#search-box button:hover {
+    background-color: #45a049;
+}
+
+/* Styles for the search results */
+#search-results {
+    margin: 10px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+#search-results div {
+    margin-top: 5px;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

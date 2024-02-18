@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, flash, redirect, current_app,send_file, abort, send_from_directory
+from flask import Blueprint, render_template, url_for, flash, jsonify,redirect, make_response,current_app,request, abort, send_from_directory
 from .database import Item, Location,Bin, db
 from .forms import ItemForm, EditItemForm
 import os
@@ -112,3 +112,27 @@ def serve_item_image(item_id):
     if not os.path.isfile(file_path):
         abort(404)
     return send_from_directory(directory, filename)
+
+@items_bp.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('q')
+    if not query:
+        return make_response("No Search Query provided", 400)
+
+    search = f"%{query}%"
+    items = Item.query.filter(Item.name.like(search)).all()
+    results = []
+    for item in items:
+        bin_obj = Bin.query.get(item.bin_id)
+        location_obj = Location.query.get(bin_obj.location_id) if bin_obj else None
+        item_dict = {
+            'item_name': item.name,
+            'item_id': item.id,
+            'bin_id': bin_obj.id if bin_obj else None,
+            'bin_name': bin_obj.name if bin_obj else "No Bin",
+            'location_id': location_obj.id if location_obj else None,
+            'location_name': location_obj.name if location_obj else "No Location",
+        }
+        results.append(item_dict)
+    return jsonify(results)
+
