@@ -24,8 +24,8 @@ RUN pip install --upgrade pip \
 # Copy the current directory contents into the container at /BinGenie
 COPY . /BinGenie/
 
-# Make port 5000 available to the world outside this container
-EXPOSE 5000
+# Expose the port the app runs on
+EXPOSE 8000
 
-# Run the application
-CMD ["flask", "run"]
+# Run the application with Gunicorn
+CMD ["gunicorn", "--workers", "5", "--bind", "0.0.0.0:8000", "run:app"]
