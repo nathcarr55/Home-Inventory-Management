@@ -12,9 +12,6 @@ WORKDIR /BinGenie
 
 # Install system dependencies
 RUN apt-get update \
-<<<<<<< Updated upstream
-  && apt-get install -y --no-install-recommends gcc \
-=======
   && apt-get install -y --no-install-recommends \
      gcc \
      libpq-dev \
@@ -26,7 +23,6 @@ RUN apt-get update \
      libffi-dev \
      libssl-dev \
      git \
->>>>>>> Stashed changes
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
