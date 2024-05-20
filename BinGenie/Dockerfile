@@ -12,7 +12,21 @@ WORKDIR /BinGenie
 
 # Install system dependencies
 RUN apt-get update \
+<<<<<<< Updated upstream
   && apt-get install -y --no-install-recommends gcc \
+=======
+  && apt-get install -y --no-install-recommends \
+     gcc \
+     libpq-dev \
+     build-essential \
+     python3-dev \
+     libxml2-dev \
+     libxslt1-dev \
+     zlib1g-dev \
+     libffi-dev \
+     libssl-dev \
+     git \
+>>>>>>> Stashed changes
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
