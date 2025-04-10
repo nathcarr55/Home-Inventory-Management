@@ -76,4 +76,84 @@ class ItemResource(Resource):
             # Use partial=True so only provided fields are updated.
             updated_item = schema.load(data, instance=item, partial=True, session=db.session)
         except Exception as e:
-            return {"message": "Error parsing input", "error": str(e
+            return {"message": "Error parsing input", "error": str(e)}, 400
+
+        # Process a new image file if provided.
+        file = request.files.get('image')
+        if file and file.filename != '':
+            # Optionally, delete the old image file if needed.
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+            updated_item.image_path = filename
+
+        db.session.commit()
+        return schema.dump(updated_item), 200
+
+    def delete(self, id):
+        """Delete an item and its associated image file if present."""
+        item = Item.query.get_or_404(id)
+        image_path = item.image_path
+        db.session.delete(item)
+        db.session.commit()
+
+        # Attempt to delete the image file if it exists.
+        if image_path:
+            full_path = os.path.join(current_app.config['UPLOAD_FOLDER'], image_path)
+            try:
+                if os.path.exists(full_path):
+                    os.remove(full_path)
+            except OSError as e:
+                # Log the error if necessary; here we return a warning message.
+                return {"message": "Item deleted but error deleting image", "error": str(e)}, 200
+
+        return {"message": "Item deleted successfully"}, 204
+
+
+class ItemImageResource(Resource):
+    def get(self, item_id):
+        """Serve the image file for an item.
+
+        Returns a default image if no image is set.
+        """
+        directory = current_app.config.get("UPLOAD_FOLDER") or os.environ.get("UPLOAD_FOLDER")
+        item = Item.query.get_or_404(item_id)
+        if item.image_path:
+            image_file = os.path.join(directory, item.image_path)
+        else:
+            image_file = os.path.join(directory, "default.jpeg")
+        if not os.path.isfile(image_file):
+            abort(404)
+        # Send the file from the directory.
+        return send_from_directory(directory, os.path.basename(image_file))
+
+
+class ItemSearchResource(Resource):
+    def get(self):
+        """Search for items by name using a query parameter 'q'."""
+        query = request.args.get('q')
+        if not query:
+            return {"message": "No search query provided"}, 400
+
+        search_pattern = f"%{query}%"
+        items = Item.query.filter(Item.name.ilike(search_pattern)).all()
+        results = []
+        for item in items:
+            bin_obj = Bin.query.get(item.bin_id)
+            location_obj = Location.query.get(bin_obj.location_id) if bin_obj else None
+            results.append({
+                "item_name": item.name,
+                "item_id": str(item.id),
+                "bin_id": str(bin_obj.id) if bin_obj else None,
+                "bin_name": bin_obj.name if bin_obj else "No Bin",
+                "location_id": str(location_obj.id) if location_obj else None,
+                "location_name": location_obj.name if location_obj else "No Location"
+            })
+        return jsonify(results)
+
+
+# Register resource endpoints.
+api.add_resource(ItemsListResource, '/items')
+api.add_resource(ItemResource, '/items/<string:id>')
+api.add_resource(ItemImageResource, '/item-image/<string:item_id>')
+api.add_resource(ItemSearchResource, '/search')

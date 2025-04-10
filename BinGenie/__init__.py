@@ -6,7 +6,7 @@ from .database import db
 
 def create_app(config_filename=None):
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object(ProductionConfig)
+    app.config.from_object(DevelopmentConfig)
     db.init_app(app)
     Migrate(app, db)
     with app.app_context():
